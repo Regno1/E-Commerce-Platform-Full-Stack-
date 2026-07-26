@@ -1,0 +1,109 @@
+# ============================================================
+#  BACKEND  (Spring Boot / Maven)
+# ============================================================
+
+HELP.md
+target/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### Maven ###
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea/
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### Spring Boot ###
+application-local.properties
+application-local.yml
+*.local.properties
+*.local.yml
+
+# ============================================================
+#  FRONTEND  (React / Vite / Node)
+# ============================================================
+
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+### Logs ###
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+### Build output ###
+build/
+out/
+.next/
+.nuxt/
+.cache/
+
+# ============================================================
+#  ENVIRONMENT & SECRETS
+# ============================================================
+
+.env
+.env.*
+!.env.example
+*.secret
+secrets/
+
+# ============================================================
+#  OS & EDITOR
+# ============================================================
+
+### Windows ###
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+### macOS ###
+.DS_Store
+.AppleDouble
+.LSOverride
+
+### VS Code ###
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+### JetBrains ###
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
