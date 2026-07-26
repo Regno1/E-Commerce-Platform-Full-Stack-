@@ -11,23 +11,30 @@ import Orders from "./pages/Orders/Orders"
 import Profile from "./pages/Profile/Profile"
 import Admin from "./pages/Admin/Admin"
 import NotFound from "./pages/NotFound/NotFound"
+import Layout from "./components/layout/Layout"
 
 const App = () => {
   return (
    <BrowserRouter>
    <Routes>
+    <Route element={<Layout/>}> 
+
+    
    <Route path="/" element={<Home />} />
    <Route path="/products"  element={<Products />} />
    <Route path="/products/:id" element={<ProductDetails />} />
    <Route path="/cart" element={<Cart/>} />
-   <Route path="/whishlist" element={<Wishlist/>}/>
+   <Route path="/wishlist" element={<Wishlist/>}/>
    <Route path="/checkout" element={<Checkout/>}/>
-   <Route path="/Register" element={<Register/>}/>
-   <Route path="/login" element={<Login/>} />
+   
    <Route path="/orders" element={<Orders/>} />
-   <Route path="profile" element={<Profile />} />
+   <Route path="/profile" element={<Profile />} />
    <Route path="/admin" element={<Admin />} />
-   <Route path="*" element={<NotFound />}/>
+  
+   </Route>
+   <Route path="/register" element={<Register/>}/>
+   <Route path="/login" element={<Login/>} />
+    <Route path="*" element={<NotFound />}/>
    </Routes>
    
    </BrowserRouter>
