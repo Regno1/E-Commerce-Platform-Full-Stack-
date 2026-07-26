@@ -1,5 +1,8 @@
-﻿const Orders = () => {
-  return <div>Orders</div>
+﻿
+const Orders = () => {
+  return (
+    <div>Orders</div>
+  )
 }
 
 export default Orders
