@@ -1,12 +1,16 @@
 
 const Footer = () => {
   return (
-    <footer className='bg-grey-900 text-white py-5 mt-10'>
-      <div className='text-center'>  © 2026 ShopSphere. All Rights Reserved.
-
+    <footer className="footer">
+      <div className="footer-inner">
+        <span className="footer-logo">ShopEase</span>
+        <div className="footer-divider"></div>
+        <p className="footer-copy">
+          © 2026 ShopEase. All Rights Reserved. Crafted with ❤️ for premium shoppers.
+        </p>
       </div>
     </footer>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

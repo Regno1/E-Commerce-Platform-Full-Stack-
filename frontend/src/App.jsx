@@ -12,10 +12,13 @@ import Profile from "./pages/Profile/Profile"
 import Admin from "./pages/Admin/Admin"
 import NotFound from "./pages/NotFound/NotFound"
 import Layout from "./components/layout/Layout"
+import { CartProvider } from "./context/CartContext"
+
 
 const App = () => {
   return (
-   <BrowserRouter>
+    <CartProvider>
+<BrowserRouter>
    <Routes>
     <Route element={<Layout/>}> 
 
@@ -23,7 +26,7 @@ const App = () => {
    <Route path="/" element={<Home />} />
    <Route path="/products"  element={<Products />} />
    <Route path="/products/:id" element={<ProductDetails />} />
-   <Route path="/cart" element={<Cart/>} />
+   <Route path="/cart" element={<Cart />} />
    <Route path="/wishlist" element={<Wishlist/>}/>
    <Route path="/checkout" element={<Checkout/>}/>
    
@@ -38,6 +41,8 @@ const App = () => {
    </Routes>
    
    </BrowserRouter>
+    </CartProvider>
+   
     
   )
 }
