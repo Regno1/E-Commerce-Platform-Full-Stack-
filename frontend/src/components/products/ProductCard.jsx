@@ -1,9 +1,11 @@
 import { useContext } from "react";
 import CartContext from "../../context/CartContext";
 import { Link } from "react-router-dom";
+import WishlistContext from "../../context/WishlistContext";
 
 const ProductCard = ({ product }) => {
   const { addToCart } = useContext(CartContext);
+  const { addToList } = useContext(WishlistContext);
   
   return (
     <div className="product-card">
@@ -26,6 +28,12 @@ const ProductCard = ({ product }) => {
         >
           Add to Cart
         </button>
+          <button
+              onClick={() => addToList(product)}
+              className="px-6 py-3 border-2 border-[#845007] text-[#845007] rounded-lg hover:bg-[#845007] hover:text-white"
+            >
+              ♡ Add to Wishlist
+            </button>
       </div>
     </div>
   );

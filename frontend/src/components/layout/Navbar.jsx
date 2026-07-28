@@ -2,10 +2,11 @@ import { Link, NavLink } from "react-router-dom"
 import { useContext } from "react";
 import CartContext from "../../context/CartContext";
 import { FaSearch } from "react-icons/fa";
+import WishlistContext from "../../context/WishlistContext";
 
 function Navbar() {
   const { cart } = useContext(CartContext);
-
+  const {wList} =useContext(WishlistContext)
   const links = [
     {
       name: "Home",
@@ -33,6 +34,8 @@ function Navbar() {
     return total + item.qty;
   }, 0);
 
+  const TotalList= wList.length;
+
   return (
     <nav className="navbar">
       <Link to="/" className="navbar-logo">
@@ -57,6 +60,10 @@ function Navbar() {
             <span>{link.name}</span>
             {link.name === "Cart" && TotalItem > 0 && (
               <span className="navbar-cart-badge">{TotalItem}</span>
+            )}
+            {link.name==="Wishlist" && TotalList>0 &&(
+              <span className="navbar-cart-badge">{TotalList}
+              </span>
             )}
           </NavLink>
         ))}

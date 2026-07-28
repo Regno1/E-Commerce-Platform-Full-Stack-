@@ -13,11 +13,13 @@ import Admin from "./pages/Admin/Admin"
 import NotFound from "./pages/NotFound/NotFound"
 import Layout from "./components/layout/Layout"
 import { CartProvider } from "./context/CartContext"
+import { WlistProvider } from "./context/WishlistContext"
 
 
 const App = () => {
   return (
     <CartProvider>
+      <WlistProvider>
 <BrowserRouter>
    <Routes>
     <Route element={<Layout/>}> 
@@ -41,6 +43,8 @@ const App = () => {
    </Routes>
    
    </BrowserRouter>
+      </WlistProvider>
+
     </CartProvider>
    
     

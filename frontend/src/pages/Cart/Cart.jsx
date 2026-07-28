@@ -1,16 +1,16 @@
-import { useContext } from "react";
+﻿import { useContext } from "react";
 import CartContext from "../../context/CartContext";
 
 const Cart = () => {
   const {
-    cart,
-    increaseQty,
-    decreaseQty,
-    totalPrice,
-    totalItem,
-    Delivary,
-    grandTotal,
-  } = useContext(CartContext);
+  cart,
+  increaseQty,
+  decreaseQty,
+  totalPrice,
+  totalItem,
+  delivery,
+  grandTotal,
+} = useContext(CartContext);
 
   if (cart.length === 0) {
     return (
@@ -85,7 +85,7 @@ const Cart = () => {
             </div>
             <div className="cart-summary-row">
               <span className="label">Delivery</span>
-              <span className="value">₹{Number(Delivary).toLocaleString("en-IN")}</span>
+              <span className="value">₹{delivery}</span>
             </div>
             <div className="cart-summary-row total">
               <span className="label">Grand Total</span>
