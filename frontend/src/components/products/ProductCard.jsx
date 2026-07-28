@@ -1,39 +1,35 @@
-import { useContext } from "react"
-import CartContext from "../../context/CartContext"
+import { useContext } from "react";
+import CartContext from "../../context/CartContext";
+import { Link } from "react-router-dom";
 
-const ProductCard = ({product}) => {
-const {cart,setCart,addToCart}= useContext(CartContext)
+const ProductCard = ({ product }) => {
+  const { addToCart } = useContext(CartContext);
   
+  return (
+    <div className="product-card">
+      <div className="product-card-image-wrap">
+        <span className="product-card-badge">🔥 Hot Deal</span>
+        <Link to={`/products/${product.id}`}>
+         <img src={product.image} alt={product.name}/>
+       
+        </Link>
+       
+      </div>
 
-
-    
-  
-return <div 
-className="bg-white rounded-2xl shadow-md hover:shadow-xl hover:translate-y-2 transition-all duration-300 overflow-hidden cursor-pointer">
-    
-    
-    <img src={product.image} alt={product.name}
-    className="w-full h-56 object-cover"
-    />
-    <div className="p-4">
-     <h1 className="text-xl font-semibold">
-      {product.name}
-      </h1>
-    <p 
-    className="text-yellow-500 font-medium mt-2">
-      ⭐{product.rating}</p>
-    <p 
-    className="text-2xl font-bold text-green-600 mt-2">
-       ₹{product.price}</p>
-    <button 
-    className="mt-5 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition" onClick={()=>{
-    addToCart(product);
-    }}>
-      Add to Cart</button>
+      <div className="product-card-body ">
+        <h3 className="product-card-name">{product.name}</h3>
+        <p className="product-card-rating">⭐ {product.rating}</p>
+        <p className="product-card-price">₹{product.price.toLocaleString("en-IN")}</p>
+        <button
+          className="product-card-btn"
+          onClick={() => addToCart(product)}
+        >
+          Add to Cart
+        </button>
+      </div>
     </div>
-    
-  </div>
+  );
+};
 
-}
 
 export default ProductCard
