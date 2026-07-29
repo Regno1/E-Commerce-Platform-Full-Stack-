@@ -14,15 +14,21 @@ import NotFound from "./pages/NotFound/NotFound"
 import Layout from "./components/layout/Layout"
 import { CartProvider } from "./context/CartContext"
 import { WlistProvider } from "./context/WishlistContext"
+import { useState } from "react"
 
 
 const App = () => {
+  const [search, setSearch] = useState("");
   return (
     <CartProvider>
       <WlistProvider>
 <BrowserRouter>
    <Routes>
-    <Route element={<Layout/>}> 
+    <Route element={<Layout
+    search={search}
+    setSearch={setSearch}
+    
+    />}> 
 
     
    <Route path="/" element={<Home />} />

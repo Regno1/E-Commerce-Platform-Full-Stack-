@@ -1,12 +1,13 @@
-import { Link, NavLink } from "react-router-dom"
+import { Link, NavLink, useNavigate } from "react-router-dom"
 import { useContext } from "react";
 import CartContext from "../../context/CartContext";
 import { FaSearch } from "react-icons/fa";
 import WishlistContext from "../../context/WishlistContext";
 
-function Navbar() {
+function Navbar({search,setSearch}) {
   const { cart } = useContext(CartContext);
   const {wList} =useContext(WishlistContext)
+  const navigate= useNavigate();
   const links = [
     {
       name: "Home",
@@ -42,10 +43,31 @@ function Navbar() {
         ShopEase
       </Link>
 
-      <div className="navbar-search">
-        <input type="text" placeholder="Search products…" id="navbar-search-input" />
-        <FaSearch className="navbar-search-icon" />
-      </div>
+      <div >
+      
+        <input 
+        type="text" 
+        placeholder="Search products…" 
+        id="navbar-search-input" 
+        value={search}
+        onChange={(e)=>{
+          setSearch(e.target.value)
+        }}
+       onKeyDown={(e) => {
+       if (e.key === "Enter" && search.trim() !== "") {
+    navigate(`/products?search=${encodeURIComponent(search)}`);
+  }
+}}
+        />
+        <FaSearch 
+        className="navbar-search-icon" 
+        onClick={()=>{
+          navigate(`/products?search=${encodeURIComponent(search)}`)
+        }}
+        />
+      
+        
+        </div>
 
       <div className="navbar-links">
         {links.map((link) => (
