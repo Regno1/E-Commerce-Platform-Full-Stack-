@@ -1,14 +1,3 @@
-import nike from "../../assets/images/products/nike.jpg";
-import headphones from "../../assets/images/products/headphones.jpg";
-import iphone from "../../assets/images/products/iphone.jpg";
-import watch from "../../assets/images/products/watch.jpg";
-import laptop from "../../assets/images/products/laptop.jpg";
-import camera from "../../assets/images/products/camera.jpg";
-import shoes from "../../assets/images/products/shoes.jpg";
-import speaker from "../../assets/images/products/speaker.jpg";
-
-
-
 const product = [
   {
     id: 1,
@@ -16,79 +5,159 @@ const product = [
     category: "Footwear",
     price: 5999,
     rating: 4.8,
-    image: nike,
-    description:
-      "Premium running shoes with lightweight cushioning, breathable mesh, and all-day comfort for workouts and casual wear.",
+    image:
+      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800",
+    description: "Premium running shoes with lightweight cushioning.",
   },
   {
     id: 2,
-    name: "Sony Headphones",
-    category: "Electronics",
-    price: 3499,
-    rating: 4.7,
-    image: headphones,
-    description:
-      "Wireless over-ear headphones featuring deep bass, noise cancellation, and up to 30 hours of battery life.",
-  },
-  {
-    id: 3,
-    name: "iPhone 16",
-    category: "Mobiles",
-    price: 79999,
-    rating: 4.9,
-    image: iphone,
-    description:
-      "Apple's latest smartphone with a powerful processor, advanced camera system, long battery life, and Super Retina display.",
-  },
-  {
-    id: 4,
-    name: "Apple Watch",
-    category: "Accessories",
-    price: 24999,
-    rating: 4.8,
-    image: watch,
-    description:
-      "Smartwatch with fitness tracking, heart rate monitoring, sleep analysis, GPS, and seamless iPhone integration.",
-  },
-  {
-    id: 5,
-    name: "MacBook Air M4",
-    category: "Laptops",
-    price: 114999,
-    rating: 4.9,
-    image: laptop,
-    description:
-      "Ultra-thin laptop powered by Apple's M4 chip, offering exceptional performance, long battery life, and a stunning Retina display.",
-  },
-  {
-    id: 6,
-    name: "Canon EOS R50",
-    category: "Cameras",
-    price: 62999,
-    rating: 4.7,
-    image: camera,
-    description:
-      "Mirrorless camera with high-resolution image quality, fast autofocus, 4K video recording, and interchangeable lenses.",
-  },
-  {
-    id: 7,
     name: "Adidas Ultraboost",
     category: "Footwear",
     price: 8999,
     rating: 4.8,
-    image: shoes,
-    description:
-      "High-performance running shoes with responsive Boost cushioning, lightweight design, and superior comfort.",
+    image:
+      "https://images.unsplash.com/photo-1543508282-6319a3e2621f?w=800",
+    description: "Responsive Boost cushioning for everyday comfort.",
+  },
+  {
+    id: 3,
+    name: "Puma RS-X",
+    category: "Footwear",
+    price: 6499,
+    rating: 4.6,
+    image:
+      "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=800",
+    description: "Modern sneakers with bold styling.",
+  },
+  {
+    id: 4,
+    name: "iPhone 16 Pro",
+    category: "Mobiles",
+    price: 129999,
+    rating: 4.9,
+    image:
+      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800",
+    description: "Latest Apple flagship smartphone.",
+  },
+  {
+    id: 5,
+    name: "Samsung Galaxy S25",
+    category: "Mobiles",
+    price: 99999,
+    rating: 4.8,
+    image:
+      "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800",
+    description: "Android flagship with AI features.",
+  },
+  {
+    id: 6,
+    name: "Google Pixel 10",
+    category: "Mobiles",
+    price: 84999,
+    rating: 4.8,
+    image:
+      "https://images.unsplash.com/photo-1580910051074-3eb694886505?w=800",
+    description: "Pixel camera and clean Android experience.",
+  },
+  {
+    id: 7,
+    name: "MacBook Air M4",
+    category: "Laptops",
+    price: 114999,
+    rating: 4.9,
+    image:
+      "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fG1hY3xlbnwwfHwwfHx8MA%3D%3D",
+    description: "Thin and powerful Apple laptop.",
   },
   {
     id: 8,
+    name: "Dell XPS 14",
+    category: "Laptops",
+    price: 132999,
+    rating: 4.8,
+    image:
+      "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=800",
+    description: "Premium Windows ultrabook.",
+  },
+  {
+    id: 9,
+    name: "Lenovo Legion 5",
+    category: "Laptops",
+    price: 118999,
+    rating: 4.7,
+    image:
+      "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800",
+    description: "Gaming laptop with RTX graphics.",
+  },
+  {
+    id: 10,
+    name: "Sony WH-1000XM5",
+    category: "Electronics",
+    price: 29999,
+    rating: 4.9,
+    image:
+      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800",
+    description: "Industry-leading noise cancellation.",
+  },
+  {
+    id: 11,
     name: "JBL Flip 6",
     category: "Electronics",
     price: 7999,
     rating: 4.6,
-    image: speaker,
-    description:
-      "Portable Bluetooth speaker with powerful sound, deep bass, IP67 waterproof rating, and up to 12 hours of playtime.",
+    image:
+      "https://images.unsplash.com/photo-1589003077984-894e133dabab?w=800",
+    description: "Portable Bluetooth speaker.",
+  },
+  {
+    id: 12,
+    name: "Canon EOS R50",
+    category: "Cameras",
+    price: 62999,
+    rating: 4.7,
+    image:
+      "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800",
+    description: "Mirrorless camera with 4K video.",
+  },
+  {
+    id: 13,
+    name: "Sony Alpha A6700",
+    category: "Cameras",
+    price: 109999,
+    rating: 4.9,
+    image:
+      "https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?w=800",
+    description: "Professional APS-C mirrorless camera.",
+  },
+  {
+    id: 14,
+    name: "Apple Watch Series 10",
+    category: "Accessories",
+    price: 42999,
+    rating: 4.8,
+    image:
+      "https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?w=800",
+    description: "Premium smartwatch with health tracking.",
+  },
+  {
+    id: 15,
+    name: "Logitech MX Master 3S",
+    category: "Accessories",
+    price: 9999,
+    rating: 4.9,
+    image:
+      "https://images.unsplash.com/photo-1527814050087-3793815479db?w=800",
+    description: "Professional wireless productivity mouse.",
+  },
+  {
+    id: 16,
+    name: "Samsung T7 SSD",
+    category: "Accessories",
+    price: 8499,
+    rating: 4.8,
+    image:
+      "https://images.unsplash.com/photo-1593642634367-d91a135587b5?w=800",
+    description: "Fast portable SSD with USB-C connectivity.",
   },
 ];
 
