@@ -43,6 +43,21 @@ if(sortBy==="rating"){
   sortedProduct.sort((a,b)=>a.name.localeCompare(b.name))
 }
 
+const [currentPage, setcurrentPage] = useState(1);
+
+const productsPerPage=8;
+const totalPAge=Math.ceil(sortedProduct.length/8);
+
+const PageNumber=Array.from(
+  {length:totalPAge},
+  (_,index)=>index+1);
+
+const startIndex=(currentPage-1)* productsPerPage;
+const endIndex=startIndex+productsPerPage;
+
+const currentProduct=sortedProduct.slice(
+  startIndex,endIndex
+);
   return (
     <div>
 <section className="sorting" 
@@ -52,7 +67,7 @@ if(sortBy==="rating"){
   onChange={(e)=>{
   setSortBy(e.target.value);
   }}
-value={"sort"}
+
   >
  
   <option value={"lowToHigh"}>Price: Low to High</option>
@@ -69,10 +84,37 @@ value={"sort"}
         <p className="section-subtitle">Explore our Products</p>
       </div>
     <div className="grid grid-cols-4 gap-6"> 
-   {sortedProduct.map((item)=>{
+   {currentProduct.map((item)=>{
     return<ProductCard key={item.name} product={item}/>
    })}
     </div>
+     </section>
+     <section >
+      <button 
+        onClick={()=>{
+          if(currentPage>1){
+setcurrentPage(currentPage-1); 
+          }
+          
+        }}
+        >Previous</button>
+      {PageNumber.map((item)=>{
+        return  <button key={item}  onClick={()=>{
+          setcurrentPage(item);
+        }}>{item}</button>
+        
+        
+        
+      })}
+      <button   onClick={()=>{
+        if(currentPage<totalPAge){
+setcurrentPage(currentPage+1); 
+          }
+          
+        }}>Next</button>
+        
+      
+
      </section>
     </div>
     

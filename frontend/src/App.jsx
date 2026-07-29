@@ -15,6 +15,7 @@ import Layout from "./components/layout/Layout"
 import { CartProvider } from "./context/CartContext"
 import { WlistProvider } from "./context/WishlistContext"
 import { useState } from "react"
+import { Toaster } from "react-hot-toast";
 
 
 const App = () => {
@@ -47,7 +48,7 @@ const App = () => {
    <Route path="/login" element={<Login/>} />
     <Route path="*" element={<NotFound />}/>
    </Routes>
-   
+   <Toaster/>
    </BrowserRouter>
       </WlistProvider>
 

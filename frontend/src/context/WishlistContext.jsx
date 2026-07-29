@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const WishlistContext = createContext();
 
@@ -14,6 +15,7 @@ export const WlistProvider = ({ children }) => {
 
   // Add to Wishlist
   const addToList = (product) => {
+    toast.success("Added to Wishlist")
     const existingProduct = wList.find(
       (item) => item.id === product.id
     );
@@ -30,6 +32,7 @@ export const WlistProvider = ({ children }) => {
 
   // Remove from Wishlist
   const removeFromWishList = (product) => {
+    toast.error("removes from Wishlist")
     const updatedList = wList.filter(
       (item) => item.id !== product.id
     );
