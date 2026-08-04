@@ -2,9 +2,9 @@
    ShopEase — Minimal Tailwind-Style Design System
    ============================================================ */
 
-@import "tailwindcss";
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;600;700;800;900&display=swap');
+
+@import "tailwindcss";
 
 /* --- Design Tokens --- */
 :root {
@@ -152,9 +152,11 @@ a { text-decoration: none; color: inherit; }
   position: relative;
   flex: 1;
   max-width: 400px;
+  padding: 10px;
 }
 
 .navbar-search input {
+ 
   width: 100%;
   padding: 0.55rem 1rem 0.55rem 2.6rem;
   background: var(--bg-2);
@@ -1707,4 +1709,67 @@ a { text-decoration: none; color: inherit; }
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
+}
+
+/* ============================================================
+   PRODUCT CARD — Wishlist button override
+   (second button in card body uses Tailwind inline; this
+    brings it in line with the design system)
+   ============================================================ */
+.product-card-body > button + button {
+  width: 100%;
+  padding: 0.6rem;
+  background: transparent !important;
+  color: var(--peach) !important;
+  border: 1.5px solid var(--peach) !important;
+  border-radius: var(--r-sm) !important;
+  font-family: var(--font-b);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--t);
+  margin-top: 0.5rem;
+}
+
+.product-card-body > button + button:hover {
+  background: var(--peach) !important;
+  color: var(--white) !important;
+  border-color: var(--peach) !important;
+  box-shadow: var(--shadow-peach);
+}
+
+/* ============================================================
+   WISHLIST PAGE — Button overrides
+   (buttons are reused cart classes inside .cart-item-left,
+    which never holds buttons on the Cart page itself)
+   ============================================================ */
+
+/* "🛒 Add to Cart" — checkout-btn is width:100% by default, bad in flex row */
+.cart-item-left .checkout-btn {
+  width: auto;
+  margin-top: 0;
+  padding: 0.55rem 1.25rem;
+  font-size: 0.82rem;
+  border-radius: var(--r-sm);
+  white-space: nowrap;
+}
+
+/* "❤️ Remove" — cart-qty-btn is 32x32 square, can't hold text */
+.cart-item-left .cart-qty-btn.decrease {
+  width: auto;
+  height: auto;
+  padding: 0.55rem 1.25rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  background: transparent;
+  color: #dc2626;
+  border: 1.5px solid #dc2626;
+  border-radius: var(--r-sm);
+  white-space: nowrap;
+}
+
+.cart-item-left .cart-qty-btn.decrease:hover {
+  background: #dc2626;
+  color: var(--white);
+  border-color: #dc2626;
 }

@@ -48,7 +48,7 @@ function Navbar({search,setSearch}) {
         <input 
         type="text" 
         placeholder="Search products…" 
-        id="navbar-search-input" 
+        id="navbar-search-icon" 
         value={search}
         onChange={(e)=>{
           setSearch(e.target.value)
