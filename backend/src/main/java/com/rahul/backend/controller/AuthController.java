@@ -1,6 +1,7 @@
 package com.rahul.backend.controller;
 
 
+import com.rahul.backend.dto.request.LoginRequest;
 import com.rahul.backend.dto.request.RegisterRequest;
 import com.rahul.backend.dto.response.AuthResponse;
 import com.rahul.backend.service.UserService;
@@ -23,6 +24,10 @@ public class AuthController {
         return  userService.register(request);
     }
 
+    @PostMapping("/login")
+    public AuthResponse login(@Valid @RequestBody LoginRequest request){
+        return userService.login(request);
+    }
 
 
 }

@@ -16,6 +16,8 @@ public Product toEntity(ProductRequest request){
             .imageUrl(request.getImageUrl())
             .brand(request.getBrand())
             .category(request.getCategory())
+            .rating(0.0)
+            .active(true)
             .build();
 }
 

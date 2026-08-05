@@ -6,6 +6,7 @@ import com.rahul.backend.dto.request.RegisterRequest;
 import com.rahul.backend.dto.response.AuthResponse;
 import com.rahul.backend.entity.User;
 import com.rahul.backend.repository.UserRepository;
+import com.rahul.backend.security.jwt.JwtService;
 import com.rahul.backend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-
+    private final JwtService jwtService;
 
     @Override
     public AuthResponse register(RegisterRequest request) {
@@ -40,6 +41,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public AuthResponse login(LoginRequest request) {
-        return null;
+        User user= userRepository.findByEmail(request.getEmail()).orElseThrow(()-> new RuntimeException("Invalid Email or passwrd "));
+
+                if(!passwordEncoder.matches(request.getPassword(), user.getPassword())){
+                    throw new RuntimeException("Invalid Email or Password");
+
+                }
+
+                String token = jwtService.generateToken(user.getEmail());
+
+                return AuthResponse.builder()
+                        .token(token)
+                        .message("Login Successfull")
+                        .expiration(jwtService.extractExpiration(token))
+                        .build();
+
     }
 }

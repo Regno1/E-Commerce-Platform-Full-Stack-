@@ -49,8 +49,8 @@ public class ProductController {
 
     @GetMapping
     public Page<ProductResponse> getAllProducts(
-            @RequestParam String keyword,
-            @RequestParam String category,
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) String category,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "8") int size,
             @RequestParam(defaultValue = "id") String sortBy,
