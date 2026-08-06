@@ -75,7 +75,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
 
                         // Agar products abhi public rakhne hain
-                        // .requestMatchers("/api/products/**").permitAll()
+                         .requestMatchers("/api/products/**").permitAll()
 
                         // Baaki sab secure
                         .anyRequest().authenticated()
