@@ -2,6 +2,7 @@ package com.rahul.backend.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 @Getter
@@ -10,13 +11,14 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class RegisterRequest {
-   @NotBlank
+   @NotBlank(message = "Name is Required")
     private String name;
 
-   @Email
-   @NotBlank
+   @Email(message = "Invalid Email Format")
+   @NotBlank(message = "Email is Required")
     private String email;
 
-   @NotBlank
+   @NotBlank(message = "Password is Required")
+   @Size(min=6, message = "Password Must be Atleast 6 characters")
     private String password;
 }
