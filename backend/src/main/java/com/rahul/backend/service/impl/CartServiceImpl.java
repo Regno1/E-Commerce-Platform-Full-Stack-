@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -35,7 +36,6 @@ public class CartServiceImpl implements CartService {
                 SecurityContextHolder.getContext().getAuthentication();
 
         String email= authentication.getName();
-        System.out.println("Logged In User "+ email);
 
         User user= userRepository.findByEmail(email).orElseThrow(()->new RuntimeException("User not Found"));
 
@@ -73,8 +73,10 @@ public class CartServiceImpl implements CartService {
 
         List<CartItemResponse> items = cartItems.stream()
                 .map(cartItem -> CartItemResponse.builder()
+                        .cartItemId(cartItem.getId())
                         .productId(cartItem.getProduct().getId())
                         .productName(cartItem.getProduct().getName())
+                        .imageUrl(cartItem.getProduct().getImageUrl())
                         .price(cartItem.getProduct().getPrice())
                         .quantity(cartItem.getQuantity())
                         .subTotal(
@@ -105,6 +107,9 @@ public class CartServiceImpl implements CartService {
 
         CartItem cartItem= cartItemRepository.findByIdAndUser(cartItemId,user).orElseThrow(()-> new RuntimeException("Cart Not Found"));
 
+        if (quantity<=0){
+            throw new RuntimeException("Quantity must be Greater Then Zero");
+        }
         cartItem.setQuantity(quantity);
 
         cartItemRepository.save(cartItem);
@@ -129,6 +134,7 @@ public class CartServiceImpl implements CartService {
 
     }
 
+    @Transactional
     @Override
     public void clearCart() {
     Authentication authentication= SecurityContextHolder.getContext().getAuthentication();

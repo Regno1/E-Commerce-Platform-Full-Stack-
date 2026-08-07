@@ -22,7 +22,7 @@ public class CartController {
         return cartService.getCart();
     }
 
-    @PostMapping("/update/{cartItemId}")
+    @PutMapping("/update/{cartItemId}")
     public CartResponse updateCartItem(
             @PathVariable Long cartItemId,
             @RequestParam Integer quantity

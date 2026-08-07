@@ -9,20 +9,18 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CartItemResponse {
+public class OrderItemResponse {
 
-    private Long cartItemId;
 
     private Long productId;
 
     private String productName;
 
-    private String imageUrl;
+    private Integer quantity;
 
     private BigDecimal price;
 
-    private Integer quantity;
-
     private BigDecimal subTotal;
+
 
 }
