@@ -104,6 +104,14 @@ public class SecurityConfig {
                         // Products public rakhne hain
                          .requestMatchers("/api/products/**").permitAll()
 
+                        // Swagger UI public
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/v3/api-docs/**",
+                                "/v3/api-docs"
+                        ).permitAll()
+
                         // Baaki sab secure
                         .anyRequest().authenticated()
                 )
