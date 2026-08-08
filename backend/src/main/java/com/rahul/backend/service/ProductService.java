@@ -3,7 +3,6 @@ package com.rahul.backend.service;
 import com.rahul.backend.dto.response.ProductResponse;
 import com.rahul.backend.entity.Product;
 import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 

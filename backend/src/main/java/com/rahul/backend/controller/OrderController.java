@@ -34,7 +34,7 @@ public class OrderController {
         return orderService.getOrderById(orderId);
     }
 
-    @PutMapping("{orderId}status")
+    @PutMapping("/{orderId}/status")
     public OrderResponse updateOrderStatus(
             @PathVariable Long orderId,
             @RequestParam OrderStatus status

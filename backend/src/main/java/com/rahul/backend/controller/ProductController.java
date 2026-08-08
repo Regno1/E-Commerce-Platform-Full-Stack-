@@ -3,7 +3,6 @@ package com.rahul.backend.controller;
 import com.rahul.backend.dto.response.ProductResponse;
 import com.rahul.backend.entity.Product;
 import com.rahul.backend.service.ProductService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;

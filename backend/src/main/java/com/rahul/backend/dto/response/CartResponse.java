@@ -1,6 +1,6 @@
 package com.rahul.backend.dto.response;
 
-import com.rahul.backend.entity.CartItem;
+
 import lombok.*;
 
 import java.math.BigDecimal;
