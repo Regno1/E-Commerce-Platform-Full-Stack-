@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -97,24 +98,28 @@ public class SecurityConfig {
 
                 // Authorization
                 .authorizeHttpRequests(auth -> auth
-
                         // Public APIs
                         .requestMatchers("/api/auth/**").permitAll()
 
-                        // Products public rakhne hain
-                         .requestMatchers("/api/products/**").permitAll()
+                        // Products — GET public, POST/PUT/DELETE admin only
+                        .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/products/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/products/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/products/**").hasRole("ADMIN")
 
-                        // Swagger UI public
-                        .requestMatchers(
-                                "/swagger-ui/**",
-                                "/swagger-ui.html",
-                                "/v3/api-docs/**",
-                                "/v3/api-docs"
-                        ).permitAll()
+                        // Order status update — admin only
+                        .requestMatchers(HttpMethod.PUT, "/api/orders/*/status").hasRole("ADMIN")
 
-                        // Baaki sab secure
+                        // User profile
+                        .requestMatchers("/api/users/me").authenticated()
+
+                        // Swagger
+                        .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**", "/v3/api-docs").permitAll()
+
+                        // Baaki sab authenticated
                         .anyRequest().authenticated()
                 )
+
 
                 // Authentication Provider
                 .authenticationProvider(authenticationProvider())

@@ -9,7 +9,7 @@ import Beauty from "../../assets/images/beauty.jpg";
 import { useNavigate } from "react-router-dom";
 
 const Categories = () => {
-  const navigate= useNavigate();
+  const navigate = useNavigate();
   const category = [
     { image: Fashion,     name: "Fashion"       },
     { image: Electronics, name: "Electronics"   },
@@ -29,13 +29,14 @@ const Categories = () => {
         <p className="section-subtitle">Explore our wide range of product categories</p>
       </div>
 
-      <div className="categories-grid cursor-pointer">
+      <div className="categories-grid">
         {category.map((item) => (
-          <div className="category-card" key={item.name}
-          onClick={()=>{
-            navigate(`/products?category=${encodeURIComponent(item.name)}`)
-          }}
-
+          <div
+            className="category-card"
+            key={item.name}
+            onClick={() => {
+              navigate(`/products?category=${encodeURIComponent(item.name)}`);
+            }}
           >
             <img src={item.image} alt={item.name} />
             <div className="category-overlay">

@@ -1,118 +1,147 @@
-﻿import { Link, useParams } from "react-router-dom";
-import { useContext } from "react";
-
-import product from "../../components/products/product.js";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { getProductById } from "../../api/productApi";
 import CartContext from "../../context/CartContext";
 import WishlistContext from "../../context/WishlistContext";
+import { useAuth } from "../../context/AuthContext";
 
 const ProductDetails = () => {
   const { id } = useParams();
-
+  const navigate = useNavigate();
   const { addToCart } = useContext(CartContext);
   const { addToList } = useContext(WishlistContext);
+  const { isAuthenticated } = useAuth();
 
-  const detail = product.find(
-    (item) => item.id === Number(id)
-  );
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
-  if (!detail) {
+  useEffect(() => {
+    const fetchProduct = async () => {
+      setLoading(true);
+      setError(false);
+      try {
+        const res = await getProductById(id);
+        setProduct(res.data);
+      } catch {
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProduct();
+  }, [id]);
+
+  if (loading) {
     return (
-      <div className="min-h-[60vh] flex flex-col items-center justify-center gap-4 text-center">
-        <div className="text-[4rem]">🔍</div>
+      <div className="loader-container">
+        <div className="spinner"></div>
+      </div>
+    );
+  }
 
-        <h1 className="font-['Outfit'] text-2xl font-black text-[#d4724a]">
-          Product Not Found
-        </h1>
-
-        <Link
-          to="/products"
-          className="inline-flex items-center gap-1 text-[#4d5d7a] text-sm font-bold hover:text-[#ed8a63]"
-        >
+  if (error || !product) {
+    return (
+      <div className="product-not-found">
+        <div className="product-not-found-icon">🔍</div>
+        <h1>Product Not Found</h1>
+        <Link to="/products" className="product-details-back">
           ← Back to Products
         </Link>
       </div>
     );
   }
 
+  const handleAddToCart = () => {
+    if (!isAuthenticated) {
+      navigate("/login");
+      return;
+    }
+    addToCart(product);
+  };
+
+  const handleBuyNow = () => {
+    if (!isAuthenticated) {
+      navigate("/login");
+      return;
+    }
+    addToCart(product);
+    navigate("/checkout");
+  };
+
+  const price = typeof product.price === "number"
+    ? product.price
+    : parseFloat(product.price) || 0;
+
   return (
-    <div className="min-h-[80vh] py-10 px-12 max-w-[1200px] mx-auto bg-[#f5f0eb]">
+    <div className="product-details-page">
+      <h1 className="product-details-title">Product Details</h1>
 
-      {/* Title */}
-      <h1 className="font-['Outfit'] text-[clamp(1.6rem,2.5vw,2.2rem)] font-black text-[#1e2028] text-center mb-8">
-        Product Details
-      </h1>
-
-      {/* Card */}
-      <div className="bg-white rounded-3xl shadow-lg flex flex-col md:flex-row overflow-hidden">
-
-        {/* Image */}
-        <div className="flex-1 flex justify-center items-center bg-[#f7f2ee] p-10">
+      <div className="product-details-card">
+        <div className="product-details-image-col">
           <img
-            src={detail.image}
-            alt={detail.name}
-            className="max-w-[350px] w-full object-contain hover:scale-105 duration-300"
+            src={product.imageUrl || product.image}
+            alt={product.name}
+            className="product-details-image"
           />
         </div>
 
-        {/* Details */}
-        <div className="flex-1 p-10">
-
-          <span className="inline-block px-4 py-1 rounded-full bg-[#3a4660] text-white text-xs font-bold mb-4">
-            {detail.category}
+        <div className="product-details-info-col">
+          <span className="product-details-category">
+            {product.category}
           </span>
 
-          <h2 className="text-4xl font-black mb-3">
-            {detail.name}
-          </h2>
+          <h2 className="product-details-name">{product.name}</h2>
 
-          <p className="mb-3">
-            ⭐ {detail.rating}
+          {product.rating && (
+            <p className="product-details-rating">
+              ⭐ {product.rating}
+            </p>
+          )}
+
+          <p className="product-details-price">
+            ₹{price.toLocaleString("en-IN")}
           </p>
 
-          <p className="text-3xl font-black text-[#845007] mb-5">
-            ₹{detail.price.toLocaleString("en-IN")}
-          </p>
-
-          <p className="text-gray-600 leading-7 mb-8">
-            {detail.description}
-          </p>
-
-          <div className="flex flex-wrap gap-4">
-
-            {/* Cart */}
-            <button
-              onClick={() => addToCart(detail)}
-              className="px-6 py-3 bg-[#3a4660] text-white rounded-lg hover:bg-[#2b3448]"
+          {product.stock !== undefined && (
+            <span
+              className={`product-details-stock ${
+                product.stock > 0 ? "in-stock" : "out-of-stock"
+              }`}
             >
+              {product.stock > 0
+                ? `✓ In Stock (${product.stock} available)`
+                : "✕ Out of Stock"}
+            </span>
+          )}
+
+          <p className="product-details-description">
+            {product.description}
+          </p>
+
+          <div className="product-details-actions">
+            <button className="btn-cart" onClick={handleAddToCart}>
               🛒 Add to Cart
             </button>
-
-            {/* Buy */}
-            <button
-              className="px-6 py-3 bg-[#ed8a63] text-white rounded-lg hover:bg-[#d4724a]"
-            >
+            <button className="btn-buynow" onClick={handleBuyNow}>
               ⚡ Buy Now
             </button>
-
-            {/* Wishlist */}
             <button
-              onClick={() => addToList(detail)}
-              className="px-6 py-3 border-2 border-[#845007] text-[#845007] rounded-lg hover:bg-[#845007] hover:text-white"
+              className="btn-wishlist"
+              onClick={() => addToList({
+                ...product,
+                image: product.imageUrl || product.image,
+                price: price,
+              })}
             >
               ♡ Add to Wishlist
             </button>
-
           </div>
 
-          <Link
-            to="/products"
-            className="inline-block mt-8 text-[#4d5d7a] font-bold hover:text-[#ed8a63]"
-          >
+          <Link to="/products" className="product-details-back">
             ← Back to Products
           </Link>
-
         </div>
-
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-﻿import { useContext } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import WishlistContext from "../../context/WishlistContext";
@@ -12,18 +12,10 @@ const Wishlist = () => {
     return (
       <div className="cart-empty">
         <div className="cart-empty-icon">❤️</div>
-
         <h1>Your Wishlist is Empty</h1>
-
-        <p
-          style={{
-            color: "var(--clr-text-muted)",
-            fontSize: "0.95rem",
-          }}
-        >
+        <p style={{ color: "var(--clr-text-muted)", fontSize: "0.95rem" }}>
           Save your favourite products here.
         </p>
-
         <Link
           to="/products"
           className="btn-primary"
@@ -36,43 +28,33 @@ const Wishlist = () => {
   }
 
   return (
-    <div className="cart-page">
+    <div className="wishlist-page">
       <h1 className="page-title">Wishlist</h1>
 
       {wList.map((item) => (
         <div className="cart-item" key={item.id}>
           <div className="cart-item-left">
             <img
-              src={item.image}
+              src={item.image || item.imageUrl}
               alt={item.name}
               className="cart-item-img"
             />
 
             <div>
-              <h2 className="cart-item-name">
-                {item.name}
-              </h2>
-
+              <h2 className="cart-item-name">{item.name}</h2>
               <p className="cart-item-price">
-                ₹{item.price.toLocaleString("en-IN")}
+                ₹{Number(item.price).toLocaleString("en-IN")}
               </p>
 
-              <div
-                style={{
-                  display: "flex",
-                  gap: "10px",
-                  marginTop: "10px",
-                }}
-              >
+              <div className="wishlist-item-actions">
                 <button
-                  className="checkout-btn"
+                  className="btn-outline"
                   onClick={() => addToCart(item)}
                 >
                   🛒 Add to Cart
                 </button>
-
                 <button
-                  className="cart-qty-btn decrease"
+                  className="btn-danger"
                   onClick={() => removeFromWishList(item)}
                 >
                   ❤️ Remove

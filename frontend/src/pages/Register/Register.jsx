@@ -1,70 +1,142 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import toast from "react-hot-toast";
 
 const Register = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const { register, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+
+  if (isAuthenticated) {
+    navigate("/", { replace: true });
+    return null;
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    if (!name.trim() || !email.trim() || !password.trim()) {
+      setError("Please fill in all fields.");
+      return;
+    }
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters.");
+      return;
+    }
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      await register(name, email, password);
+      navigate("/");
+    } catch (err) {
+      const msg =
+        err.response?.data?.message || err.response?.data?.error || "Registration failed. Please try again.";
+      setError(msg);
+      toast.error(msg);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-[#3a4660] flex items-center justify-center px-4 py-12">
-      <div className="w-full max-w-md bg-white rounded-[28px] shadow-[0_16px_48px_rgba(58,70,96,0.25)] overflow-hidden">
-        {/* Top bar */}
-        <div className="bg-[#3a4660] px-8 py-6 text-center">
-          <span className="font-['Outfit'] text-2xl font-black text-[#e5d8cc] tracking-tight">ShopEase</span>
+    <div className="auth-page">
+      <div className="auth-card">
+        <div className="auth-card-header">
+          <span className="auth-card-header-logo">ShopEase</span>
         </div>
 
-        <div className="px-8 py-8">
-          <h1 className="font-['Outfit'] text-2xl font-black text-[#1e2028] mb-1">Create Account</h1>
-          <p className="text-[#7a7060] text-sm mb-7">Join thousands of happy shoppers today</p>
+        <div className="auth-card-body">
+          <h1 className="auth-title">Create Account</h1>
+          <p className="auth-subtitle">
+            Join thousands of happy shoppers today
+          </p>
 
-          <form className="flex flex-col gap-5" onSubmit={(e) => e.preventDefault()}>
-            <div className="flex flex-col gap-1.5">
-              <label className="text-[#3a3d48] text-sm font-semibold" htmlFor="reg-name">Full Name</label>
+          {error && <div className="auth-error">{error}</div>}
+
+          <form className="auth-form" onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label className="form-label" htmlFor="reg-name">
+                Full Name
+              </label>
               <input
                 id="reg-name"
                 type="text"
-                className="w-full px-4 py-3 border-2 border-[#e0d5c8] rounded-xl text-sm text-[#1e2028] bg-[#fdfaf7] outline-none transition-all placeholder-[#b0a898] focus:border-[#ed8a63] focus:shadow-[0_0_0_3px_rgba(237,138,99,0.15)]"
+                className="form-input"
                 placeholder="Your full name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                autoComplete="name"
               />
             </div>
 
-            <div className="flex flex-col gap-1.5">
-              <label className="text-[#3a3d48] text-sm font-semibold" htmlFor="reg-email">Email Address</label>
+            <div className="form-group">
+              <label className="form-label" htmlFor="reg-email">
+                Email Address
+              </label>
               <input
                 id="reg-email"
                 type="email"
-                className="w-full px-4 py-3 border-2 border-[#e0d5c8] rounded-xl text-sm text-[#1e2028] bg-[#fdfaf7] outline-none transition-all placeholder-[#b0a898] focus:border-[#ed8a63] focus:shadow-[0_0_0_3px_rgba(237,138,99,0.15)]"
+                className="form-input"
                 placeholder="you@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                autoComplete="email"
               />
             </div>
 
-            <div className="flex flex-col gap-1.5">
-              <label className="text-[#3a3d48] text-sm font-semibold" htmlFor="reg-password">Password</label>
+            <div className="form-group">
+              <label className="form-label" htmlFor="reg-password">
+                Password
+              </label>
               <input
                 id="reg-password"
                 type="password"
-                className="w-full px-4 py-3 border-2 border-[#e0d5c8] rounded-xl text-sm text-[#1e2028] bg-[#fdfaf7] outline-none transition-all placeholder-[#b0a898] focus:border-[#ed8a63] focus:shadow-[0_0_0_3px_rgba(237,138,99,0.15)]"
+                className="form-input"
                 placeholder="Create a strong password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                autoComplete="new-password"
               />
             </div>
 
-            <div className="flex flex-col gap-1.5">
-              <label className="text-[#3a3d48] text-sm font-semibold" htmlFor="reg-confirm">Confirm Password</label>
+            <div className="form-group">
+              <label className="form-label" htmlFor="reg-confirm">
+                Confirm Password
+              </label>
               <input
                 id="reg-confirm"
                 type="password"
-                className="w-full px-4 py-3 border-2 border-[#e0d5c8] rounded-xl text-sm text-[#1e2028] bg-[#fdfaf7] outline-none transition-all placeholder-[#b0a898] focus:border-[#ed8a63] focus:shadow-[0_0_0_3px_rgba(237,138,99,0.15)]"
+                className="form-input"
                 placeholder="Confirm your password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                autoComplete="new-password"
               />
             </div>
 
             <button
               type="submit"
-              className="w-full py-3.5 bg-[#ed8a63] text-white rounded-xl font-['Inter'] text-[0.95rem] font-black cursor-pointer shadow-[0_6px_20px_rgba(237,138,99,0.32)] transition-all hover:bg-[#d4724a] hover:-translate-y-0.5 mt-2"
+              className="auth-submit"
+              disabled={submitting}
             >
-              Create Account →
+              {submitting ? "Creating Account…" : "Create Account →"}
             </button>
           </form>
 
-          <p className="text-[#7a7060] text-sm text-center mt-6">
+          <p className="auth-footer">
             Already have an account?{" "}
-            <Link to="/login" className="text-[#ed8a63] font-bold hover:underline">Sign in</Link>
+            <Link to="/login">Sign in</Link>
           </p>
         </div>
       </div>

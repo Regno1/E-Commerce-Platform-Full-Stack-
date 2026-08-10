@@ -1,8 +1,11 @@
 package com.rahul.backend.controller;
 
+import com.rahul.backend.dto.request.ProductRequest;
 import com.rahul.backend.dto.response.ProductResponse;
 import com.rahul.backend.entity.Product;
+import com.rahul.backend.mapper.ProductMapper;
 import com.rahul.backend.service.ProductService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +18,7 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
-
+    private final ProductMapper productMapper;
 //    @GetMapping
 //    public List<Product> getAllProducts(){
 //        return productService.getAllProducts();
@@ -27,10 +30,9 @@ public class ProductController {
     }
 
     @PostMapping
-    public Product createProduct(@RequestBody Product product){
-        return productService.createProduct(product);
+    public Product createProduct(@Valid @RequestBody ProductRequest request){
+        return productService.createProduct(productMapper.toEntity(request));
     }
-
     @PutMapping("/{id}")
     public Product updateProduct(@PathVariable Long id,@RequestBody Product product){
         return productService.updateProduct(id,product);

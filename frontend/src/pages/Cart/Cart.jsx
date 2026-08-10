@@ -1,16 +1,26 @@
-﻿import { useContext } from "react";
+import { useContext } from "react";
+import { Link } from "react-router-dom";
 import CartContext from "../../context/CartContext";
 
 const Cart = () => {
   const {
-  cart,
-  increaseQty,
-  decreaseQty,
-  totalPrice,
-  totalItem,
-  delivery,
-  grandTotal,
-} = useContext(CartContext);
+    cart,
+    loading,
+    increaseQty,
+    decreaseQty,
+    totalPrice,
+    totalItem,
+    delivery,
+    grandTotal,
+  } = useContext(CartContext);
+
+  if (loading) {
+    return (
+      <div className="loader-container">
+        <div className="spinner"></div>
+      </div>
+    );
+  }
 
   if (cart.length === 0) {
     return (
@@ -20,9 +30,9 @@ const Cart = () => {
         <p style={{ color: "var(--clr-text-muted)", fontSize: "0.95rem" }}>
           Looks like you haven't added anything yet. Start shopping!
         </p>
-        <a href="/products" className="btn-primary" style={{ textDecoration: "none" }}>
+        <Link to="/products" className="btn-primary" style={{ textDecoration: "none" }}>
           Browse Products →
-        </a>
+        </Link>
       </div>
     );
   }
@@ -35,7 +45,7 @@ const Cart = () => {
         {/* ── LEFT: Cart Items ── */}
         <div className="cart-items-col">
           {cart.map((item) => (
-            <div className="cart-item" key={item.id}>
+            <div className="cart-item" key={item.cartItemId || item.id}>
               <div className="cart-item-left">
                 <img
                   src={item.image}
@@ -44,7 +54,7 @@ const Cart = () => {
                 />
                 <div>
                   <h2 className="cart-item-name">{item.name}</h2>
-                  <p className="cart-item-price">₹{item.price.toLocaleString("en-IN")}</p>
+                  <p className="cart-item-price">₹{Number(item.price).toLocaleString("en-IN")}</p>
                   <p className="cart-item-qty-label">Qty: {item.qty}</p>
                 </div>
               </div>
@@ -92,9 +102,11 @@ const Cart = () => {
               <span className="value">₹{Math.round(grandTotal).toLocaleString("en-IN")}</span>
             </div>
 
-            <button className="checkout-btn">
-              Proceed to Checkout →
-            </button>
+            <Link to="/checkout" style={{ textDecoration: "none" }}>
+              <button className="checkout-btn">
+                Proceed to Checkout →
+              </button>
+            </Link>
           </div>
         </div>
       </div>

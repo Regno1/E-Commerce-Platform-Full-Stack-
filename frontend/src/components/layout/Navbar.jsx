@@ -1,13 +1,18 @@
-import { Link, NavLink, useNavigate } from "react-router-dom"
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import CartContext from "../../context/CartContext";
 import { FaSearch } from "react-icons/fa";
 import WishlistContext from "../../context/WishlistContext";
+import { useAuth } from "../../context/AuthContext";
 
-function Navbar({search,setSearch}) {
-  const { cart } = useContext(CartContext);
-  const {wList} =useContext(WishlistContext)
-  const navigate= useNavigate();
+function Navbar({ search, setSearch }) {
+  const { totalItem } = useContext(CartContext);
+  const { wList } = useContext(WishlistContext);
+  const { isAuthenticated, user } = useAuth();
+  const navigate = useNavigate();
+
+  const TotalList = wList.length;
+
   const links = [
     {
       name: "Home",
@@ -31,43 +36,35 @@ function Navbar({search,setSearch}) {
     },
   ];
 
-  const TotalItem = cart.reduce((total, item) => {
-    return total + item.qty;
-  }, 0);
-
-  const TotalList= wList.length;
-
   return (
     <nav className="navbar">
       <Link to="/" className="navbar-logo">
         ShopEase
       </Link>
 
-      <div >
-      
-        <input 
-        type="text" 
-        placeholder="Search products…" 
-        id="navbar-search-icon" 
-        value={search}
-        onChange={(e)=>{
-          setSearch(e.target.value)
-        }}
-       onKeyDown={(e) => {
-       if (e.key === "Enter" && search.trim() !== "") {
-    navigate(`/products?search=${encodeURIComponent(search)}`);
-  }
-}}
+      <div className="navbar-search">
+        <input
+          type="text"
+          placeholder="Search products…"
+          id="navbar-search-input"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && search.trim() !== "") {
+              navigate(`/products?search=${encodeURIComponent(search)}`);
+            }
+          }}
         />
-        <FaSearch 
-        className="navbar-search-icon" 
-        onClick={()=>{
-          navigate(`/products?search=${encodeURIComponent(search)}`)
-        }}
+        <FaSearch
+          className="navbar-search-icon"
+          style={{ cursor: "pointer", pointerEvents: "auto" }}
+          onClick={() => {
+            if (search.trim() !== "") {
+              navigate(`/products?search=${encodeURIComponent(search)}`);
+            }
+          }}
         />
-      
-        
-        </div>
+      </div>
 
       <div className="navbar-links">
         {links.map((link) => (
@@ -80,15 +77,50 @@ function Navbar({search,setSearch}) {
           >
             <img src={link.icon} alt={link.name} />
             <span>{link.name}</span>
-            {link.name === "Cart" && TotalItem > 0 && (
-              <span className="navbar-cart-badge">{TotalItem}</span>
+            {link.name === "Cart" && totalItem > 0 && (
+              <span className="navbar-cart-badge">{totalItem}</span>
             )}
-            {link.name==="Wishlist" && TotalList>0 &&(
-              <span className="navbar-cart-badge">{TotalList}
-              </span>
+            {link.name === "Wishlist" && TotalList > 0 && (
+              <span className="navbar-cart-badge">{TotalList}</span>
             )}
           </NavLink>
         ))}
+
+        {/* Auth link */}
+        {isAuthenticated ? (
+          <NavLink
+            to="/profile"
+            className={({ isActive }) =>
+              `navbar-link${isActive ? " active" : ""}`
+            }
+          >
+            <span className="navbar-link-icon">👤</span>
+            <span>{user?.name?.split(" ")[0] || "Profile"}</span>
+          </NavLink>
+        ) : (
+          <NavLink
+            to="/login"
+            className={({ isActive }) =>
+              `navbar-link${isActive ? " active" : ""}`
+            }
+          >
+            <span className="navbar-link-icon">🔑</span>
+            <span>Login</span>
+          </NavLink>
+        )}
+
+        {/* Admin link — only for ADMIN role */}
+        {isAuthenticated && user?.role === "ADMIN" && (
+          <NavLink
+            to="/admin"
+            className={({ isActive }) =>
+              `navbar-link${isActive ? " active" : ""}`
+            }
+          >
+            <span className="navbar-link-icon">⚙️</span>
+            <span>Admin</span>
+          </NavLink>
+        )}
       </div>
     </nav>
   );
